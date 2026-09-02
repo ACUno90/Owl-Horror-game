@@ -22,10 +22,11 @@ public class Player : MonoBehaviour
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
     }
-
+      
     // Update is called once per frame
     void Update()
     {
+        //to rotate the camera and player with the mouse
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * CameraShotDistance, Color.green);
         turn.x += Input.GetAxis("Mouse X") * CameraSensitivity;
         turn.y += Input.GetAxis("Mouse Y") * CameraSensitivity;
