@@ -10,10 +10,12 @@ public class Player : MonoBehaviour
     [SerializeField]  float health;
     [SerializeField]  float MaxHealth;
     [SerializeField] int CameraShotDistance;
+    public Vector3 PlayerMoveDirc;
 
     [Header("Other stuff")]
    public Vector2 turn;
     public float CameraSensitivity = .5f;
+    Vector3 PlayerVal;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,5 +30,19 @@ public class Player : MonoBehaviour
         turn.x += Input.GetAxis("Mouse X") * CameraSensitivity;
         turn.y += Input.GetAxis("Mouse Y") * CameraSensitivity;
         transform.rotation = Quaternion.Euler(-turn.y, turn.x, 0);
+
+        Movement(); 
+    }
+
+    public void Movement()
+    {
+        if(controller.isGrounded)
+        {
+           PlayerVal = Vector3.zero;
+
+        }
+        PlayerMoveDirc = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
+        controller.Move(PlayerMoveDirc * speed * Time.deltaTime);
+        controller.Move(PlayerVal * Time.deltaTime);
     }
 }
