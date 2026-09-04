@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField]  float health;
     [SerializeField]  float MaxHealth;
     [SerializeField] int CameraShotDistance;
+    [SerializeField] int gravity;
     public Vector3 PlayerMoveDirc;
 
     [Header("Other stuff")]
@@ -31,7 +32,7 @@ public class Player : MonoBehaviour
         turn.x += Input.GetAxis("Mouse X") * CameraSensitivity;
         turn.y += Input.GetAxis("Mouse Y") * CameraSensitivity;
         transform.rotation = Quaternion.Euler(-turn.y, turn.x, 0);
-
+       
         Movement(); 
     }
 
@@ -40,9 +41,13 @@ public class Player : MonoBehaviour
         if(controller.isGrounded)
         {
            PlayerVal = Vector3.zero;
-
+            PlayerMoveDirc.y = 0f;
         }
+        // get the input from the player and calculate the movement direction
         PlayerMoveDirc = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
+        // apply gravity to the player
+        PlayerMoveDirc.y = -gravity * Time.deltaTime;
+        // move the player based on the input and speed
         controller.Move(PlayerMoveDirc * speed * Time.deltaTime);
         controller.Move(PlayerVal * Time.deltaTime);
     }

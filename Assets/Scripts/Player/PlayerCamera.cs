@@ -31,5 +31,11 @@ public class PlayerCamera : MonoBehaviour
         }
         else
             roll += mouseX;
+        //clamp the roll value to prevent the camera from rotating too far up or down
+        roll = Mathf.Clamp(roll, lockverMin, lockVerMax);
+        // apply the roll value to the camera's local rotation
+        transform.localPosition = Quaternion.Euler(roll, 0, 0) * transform.localPosition;
+        // rotate the parent object (the player) around the y-axis based on the mouseX value
+        transform.parent.Rotate(Vector3.up * mouseX);
     }
 }
