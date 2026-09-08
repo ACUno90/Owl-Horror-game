@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, IDamage
 {
     [Header("Monster Stats")]
     [SerializeField] Renderer Model;
@@ -84,6 +84,32 @@ public class Monster : MonoBehaviour
         agent.SetDestination(player.position);
     }   
 
+    public void TakeDamage(int damage)
+    {
+        HP -= damage;
+        if (HP <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 
+    public void OnMeleeHit(Collider other)
+    {
+        // Try to find a Player component on the collider itself or on parent objects.
+        Player player = other.GetComponent<Player>() ?? other.GetComponentInParent<Player>();
+        if (player != null)
+        {
+            player.TakeDamage(10); // Deal 10 damage to the player
+            return;
+        }
 
+        Debug.LogWarning("Monster: Player component not found on the collided object.");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        OnMeleeHit(other);
+    }
+
+  
 }

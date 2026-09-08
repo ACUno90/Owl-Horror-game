@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamage
 {
     [Header("Player Stats")]
     [SerializeField] public CharacterController controller;
     [SerializeField]  float speed;
-    [SerializeField]  float health;
-    [SerializeField]  float MaxHealth;
+   public float health;
+   public float MaxHealth;
     [SerializeField] int CameraShotDistance;
     [SerializeField] int gravity;
     public Vector3 PlayerMoveDirc;
@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
         Movement(); 
     }
 
+
+
     public void Movement()
     {
         if(controller.isGrounded)
@@ -50,5 +52,15 @@ public class Player : MonoBehaviour
         // move the player based on the input and speed
         controller.Move(PlayerMoveDirc * speed * Time.deltaTime);
         controller.Move(PlayerVal * Time.deltaTime);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -=damage;
+
+        if (health > 0) { 
+          //show losing screen 
+            
+        }
     }
 }
