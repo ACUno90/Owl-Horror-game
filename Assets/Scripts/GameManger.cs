@@ -12,6 +12,9 @@ public class GameManger : MonoBehaviour
 {
     [Header("Menues")]
     [SerializeField] GameObject Menu_Active;
+    [SerializeField] GameObject Menu_Win;
+    [SerializeField] GameObject Menu_Pause;
+    [SerializeField] GameObject Menu_Lose;
 
     [Header("Player stuff")]
     public static GameManger Instance;
@@ -24,10 +27,13 @@ public class GameManger : MonoBehaviour
 
     [Header("audio")]
     public AudioClip[] AUDclick;
-
-
+    public float AUDclickV;
+    public AudioSource playerADU;
+    //other stuff
     float timeScale_OG;
+    public bool Ispaused;
 
+    public int WinConditionCount;
 
     void Awake()
     {
@@ -50,6 +56,23 @@ public class GameManger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetButtonDown("Cancel"))
+        {
+            if (Menu_Active == null)
+            {
+                StartPause();
+                Menu_Active = Menu_Pause;
+                Menu_Pause.SetActive(Ispaused);
+            }
+            else if (Menu_Active == Menu_Pause)
+            {
+                StartUnPause();
+            }
+        }
+
+
+
+
         UpdateHealthBar();
     }
 
@@ -100,6 +123,66 @@ public class GameManger : MonoBehaviour
         HealthSlider.maxValue = PlayerScript.MaxHealth;
         HealthSlider.value = PlayerScript.health;
         PlayerHealthColor.color = healthGradient.Evaluate(1f);
+    }
+
+    public void StartPause()
+    {
+        Ispaused = !Ispaused;
+        Time.timeScale = 0f;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+      PlayerScript.enabled = false;
+        if (player != null)
+        {
+            PlayerCamera camera = player.GetComponentInChildren<PlayerCamera>();
+            if (camera != null)
+            {
+                camera.enabled = false;
+            }
+        }
+        HealthSlider.enabled = false;
+    }
+
+    public void StartUnPause()
+    {
+        Ispaused = !Ispaused;
+        Time.timeScale = timeScale_OG;  
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;   
+        Menu_Active.SetActive(Ispaused);
+        Menu_Active = null;
+        PlayerScript.enabled = true;
+        if (player != null)
+        {
+            PlayerCamera camera = player.GetComponentInChildren<PlayerCamera>();
+            if (camera != null)
+            {
+                camera.enabled = true;
+            }
+        }
+        HealthSlider.enabled = true;
+
+    }
+
+    public void StartLose() 
+    {
+        StartPause();
+        Menu_Active = Menu_Lose;    
+        Menu_Lose.SetActive(true);
+        HealthSlider.enabled = false;
+
+    }
+
+    public void UpdateGameGoal(int Goal)
+    {
+        WinConditionCount += Goal;
+        if (WinConditionCount <= 0) {
+            StartPause();
+            Menu_Active = Menu_Win;
+            Menu_Win.SetActive(Ispaused);
+            HealthSlider.enabled = false;
+
+        }
     }
 
 }
