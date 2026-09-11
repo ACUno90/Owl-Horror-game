@@ -6,7 +6,7 @@ public class ButtonFuncs : MonoBehaviour
 {
     public void Resume()
     {
-        GameManger.Instance.StartUnPause();
+        GameManger.Instance.StartUnPause(); 
     }
 
 
