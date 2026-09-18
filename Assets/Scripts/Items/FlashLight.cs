@@ -1,16 +1,27 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FlashLight : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private Light flashlight;
+    [SerializeField] private InputActionReference toggleFlashlightAction;
+
+
+    private void OnEnable()
     {
-        
+        toggleFlashlightAction.action.performed += onToggleFlashlight;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        toggleFlashlightAction.action.performed -= onToggleFlashlight;
+
+    }
+
+
+    private void onToggleFlashlight(InputAction.CallbackContext ctx)
+    {
+         flashlight.enabled = !flashlight.enabled;  
     }
 }
