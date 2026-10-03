@@ -10,6 +10,10 @@ public class Gun : MonoBehaviour
     public bool Automatic;
     private float CurrentCooldown;
 
+    public AudioClip[] AUDGun;
+    public float AUDGunVol;
+    public AudioSource GunAUD;
+
     void Start()
     {
         CurrentCooldown = FireCooldown; 
@@ -26,7 +30,7 @@ public class Gun : MonoBehaviour
                 {
                     OnGunShot.Invoke();
                     CurrentCooldown = FireCooldown;
-
+                    GunAUD.PlayOneShot(AUDGun[Random.Range(0, AUDGun.Length)], AUDGunVol);
                 }
             }
         }
@@ -39,6 +43,7 @@ public class Gun : MonoBehaviour
                 {
                     OnGunShot.Invoke();
                     CurrentCooldown = FireCooldown;
+                    GunAUD.PlayOneShot(AUDGun[Random.Range(0, AUDGun.Length)], AUDGunVol);
 
                 }
             }

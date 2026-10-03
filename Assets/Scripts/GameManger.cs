@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using System.Data;
 using UnityEngine.Rendering;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 
 public class GameManger : MonoBehaviour
 {
@@ -25,10 +26,11 @@ public class GameManger : MonoBehaviour
     public Slider HealthSlider;
     public Gradient healthGradient;
 
-    [Header("audio")]
-    public AudioClip[] AUDclick;
-    public float AUDclickV;
-    public AudioSource playerADU;
+    [Header("Menues")]
+    [SerializeField] private GameObject FirstSelectMenu;
+    [SerializeField] private GameObject FirstLosingMenu;
+
+
     //other stuff
     float timeScale_OG;
     public bool Ispaused;
@@ -129,9 +131,9 @@ public class GameManger : MonoBehaviour
     {
         Ispaused = !Ispaused;
         Time.timeScale = 0f;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-      PlayerScript.enabled = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        PlayerScript.enabled = false;
         if (player != null)
         {
             PlayerCamera camera = player.GetComponentInChildren<PlayerCamera>();
@@ -141,6 +143,7 @@ public class GameManger : MonoBehaviour
             }
         }
         HealthSlider.enabled = false;
+        EventSystem.current.SetSelectedGameObject(FirstSelectMenu);
     }
 
     public void StartUnPause()
@@ -161,16 +164,20 @@ public class GameManger : MonoBehaviour
             }
         }
         HealthSlider.enabled = true;
-
+        EventSystem.current.SetSelectedGameObject(null);    
     }
 
     public void StartLose() 
     {
-        StartPause();
+        // StartPause();
+        Time.timeScale = 0f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         Menu_Active = Menu_Lose;    
         Menu_Lose.SetActive(true);
+        PlayerScript.enabled = false;
         HealthSlider.enabled = false;
-
+        EventSystem.current.SetSelectedGameObject(FirstLosingMenu);
     }
 
     public void UpdateGameGoal(int Goal)

@@ -8,6 +8,8 @@ TagManager:
   - AI
   - Monster
   - Ground
+  - interactable
+  - Interactable
   layers:
   - Default
   - TransparentFX

@@ -19,6 +19,10 @@ public class Monster : MonoBehaviour, IDamage
     bool isinSight;
 
 
+    [Header("audio")]
+    public AudioClip[] AUDMonsterDeath;
+    public float AUDMonsterVol;
+    public AudioSource MonsterAUD;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -89,6 +93,7 @@ public class Monster : MonoBehaviour, IDamage
         HP -= damage;
         if (HP <= 0)
         {
+            MonsterAUD.PlayOneShot(AUDMonsterDeath[Random.Range(0, AUDMonsterDeath.Length)], AUDMonsterVol);
             Destroy(gameObject);
         }
     }
