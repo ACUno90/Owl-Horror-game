@@ -12,8 +12,11 @@ public class PlayerCamera : MonoBehaviour
     float roll;
     float defaultLocalY;
     Player player;
+
+    public static PlayerCamera Instance;
     void Start()
     {
+        Instance = this;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         player = GetComponent<Player>();

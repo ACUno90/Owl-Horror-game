@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public class HidiingSpots : MonoBehaviour
+public class HidiingSpots : MonoBehaviour, IDamage
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject HidingSpot;
+    public Collider HidingSpotCollider;
+    public float health;
+
     void Start()
     {
         
@@ -12,5 +15,20 @@ public class HidiingSpots : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void HidingSpotGone()
+    {
+        Destroy(gameObject);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+       // PlayerAUD.PlayOneShot(AUDPlayerHurt[Random.Range(0, AUDPlayerHurt.Length)], AUDPlayerVol);
+        if (health > 0)
+        {
+           Destroy(gameObject);
+        }
     }
 }

@@ -12,6 +12,15 @@ public class Player : MonoBehaviour, IDamage
     [SerializeField] int CameraShotDistance;
     [SerializeField] int gravity;
     public Vector3 PlayerMoveDirc;
+    [SerializeField] float CrouchHeight =1f;
+    [SerializeField] float CrouchSpeed = 2f;
+    Vector3 InitialCameraPosition; //for crounching
+
+    public float Height
+    {
+        get => controller.height;   
+        set => controller.height = value;
+    }
 
     [Header("Other stuff")]
    public Vector2 turn;
@@ -30,9 +39,9 @@ public class Player : MonoBehaviour, IDamage
     private bool IsPlayingStop;
     private Coroutine stepCoroutine;
     [Header("Ground Check")]
-    [SerializeField] private float groundCastRadius = 0.2f;
-    [SerializeField] private float groundCastDistance = 0.3f;
-    [SerializeField] private Vector3 groundCastOffset = new Vector3(0f, -0.1f, 0f);
+    [SerializeField] private float groundCastRadius = 0.2f; //0.6 is the best one for this
+    [SerializeField] private float groundCastDistance = 0.3f; //0.7 is the best one for this
+    [SerializeField] private Vector3 groundCastOffset = new Vector3(0f, -0.1f, 0f); // Offset to start the spherecast slightly below the player's position, -0.1f is the best one for this  
     [SerializeField] private LayerMask groundLayer = ~0;
     private bool isGrounded;
     [Header("Debug")]
@@ -43,13 +52,8 @@ public class Player : MonoBehaviour, IDamage
     {
         IsPlayingStop = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-        //if (controller == null)
-        //    controller = GetComponent<CharacterController>();
-        //if (controller == null)
-        //    Debug.LogError("Player: CharacterController missing on Start");
-
-        //if (PlayerAUD == null)
-        //    PlayerAUD = GetComponent<AudioSource>();
+        InitialCameraPosition = Camera.main.transform.localPosition;
+     
     }
       
     // Update is called once per frame
@@ -61,7 +65,8 @@ public class Player : MonoBehaviour, IDamage
         turn.y += Input.GetAxis("Mouse Y") * CameraSensitivity;
         transform.rotation = Quaternion.Euler(-turn.y, turn.x, 0);
        
-        Movement(); 
+        Movement();
+        Crounch();
     }
 
 
@@ -135,8 +140,26 @@ public class Player : MonoBehaviour, IDamage
             yield return new WaitForSeconds(0.3f);
         }
         IsPlayingStop = false;
+    }
 
+      public void Heal(int healAmount)
+    {
+        health += healAmount;
+        //PlayerAUD.PlayOneShot(AUDPlayerHeal[Random.Range(0, AUDPlayerHeal.Length)], AUDPlayerVol);
+    }
 
-       
+    public void Crounch()
+    {
+        float standingHeight = Height; // The height of the character when standing
+        float crouchingHeight = standingHeight / 2; // The height of the character when crouching
+        if (Input.GetButton("Crouch"))
+        {
+            float halfHeightDifference = new Vector3(0, (standingHeight - crouchingHeight)/2, 0).y;
+               var newCameraPosition = InitialCameraPosition - new Vector3(0, halfHeightDifference, 0);
+            Height = crouchingHeight;
+            PlayerCamera.Instance.transform.localPosition = newCameraPosition;
+            speed = CrouchSpeed;
+        }
+      
     }
 }
