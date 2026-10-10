@@ -5278,7 +5278,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -7069,11 +7069,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 1, z: 1}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1377699814
 MeshRenderer:
@@ -7141,8 +7141,8 @@ Transform:
   m_GameObject: {fileID: 1377699812}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7174765, z: -0, w: 0.6965828}
-  m_LocalPosition: {x: -5.441, y: 1.31, z: 11.2006}
-  m_LocalScale: {x: 1, y: 2.6044, z: 22.140932}
+  m_LocalPosition: {x: 2.2616, y: 1.31, z: 12.4935}
+  m_LocalScale: {x: 1, y: 2.6044, z: 37.471313}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -7731,14 +7731,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   controller: {fileID: 1813994499}
-  speed: 7
+  PlayerModel: {fileID: 1813994498}
+  speed: 5
   health: 80
   MaxHealth: 100
   CameraShotDistance: 2
   gravity: 1
   PlayerMoveDirc: {x: 0, y: 0, z: 0}
-  CrouchHeight: 1
+  CrouchHeight: 0.5
   CrouchSpeed: 2
+  crouchCenter: {x: 0, y: 0.5, z: 0}
   turn: {x: 0, y: 0}
   CameraSensitivity: 0.5
   AUDPlayerHurt:
