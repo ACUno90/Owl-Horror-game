@@ -1,15 +1,15 @@
 using UnityEngine.Events;
 using UnityEngine;
-
-
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using System.Collections;
 public class Gun : MonoBehaviour
 {
     public UnityEvent OnGunShot;
     public float FireCooldown;
-
     public bool Automatic;
     private float CurrentCooldown;
-
+    private bool IsEquipped = false;
     public AudioClip[] AUDGun;
     public float AUDGunVol;
     public AudioSource GunAUD;
@@ -50,4 +50,7 @@ public class Gun : MonoBehaviour
         }
         CurrentCooldown -= Time.deltaTime;
     }
+
+ 
 }
+

@@ -7,9 +7,11 @@ public class Player : MonoBehaviour, IDamage
     [Header("Player Stats")]
     [SerializeField] public CharacterController controller;
     [SerializeField] Transform PlayerModel;
+    public GameObject PlayerGun;
     [SerializeField]  float speed;
    public float health;
-   public float MaxHealth;
+    private bool IsEquipped = false;
+    public float MaxHealth;
     [SerializeField] int CameraShotDistance;
     [SerializeField] int gravity;
     public Vector3 PlayerMoveDirc;
@@ -90,6 +92,11 @@ public class Player : MonoBehaviour, IDamage
         if(Input.GetKeyDown(KeyCode.LeftControl))
         {
             ToggleCrounch();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ToggleWeapon();
         }
 
         Movement();
@@ -218,5 +225,30 @@ public class Player : MonoBehaviour, IDamage
         {
             Crounch();
         }
+    }
+
+
+    private void ToggleWeapon()
+    {
+        if (IsEquipped == true)
+        {
+            HideWeapon();
+        }
+        else
+        {
+            ShowWeapon();
+        }
+    }
+
+    public void HideWeapon()
+    {
+        PlayerGun.SetActive(false);
+        IsEquipped = false;
+    }
+
+    public void ShowWeapon()
+    {
+        PlayerGun.SetActive(true);
+        IsEquipped = true;
     }
 }

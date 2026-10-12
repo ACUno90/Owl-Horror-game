@@ -5402,6 +5402,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   FireCooldown: 0
+  gun: {fileID: 129991008}
   Automatic: 0
   AUDGun:
   - {fileID: 8300000, guid: 950356edfffd4b045a5d86ac5f333fb1, type: 3}
@@ -7732,6 +7733,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   controller: {fileID: 1813994499}
   PlayerModel: {fileID: 1813994498}
+  PlayerGun: {fileID: 129991008}
   speed: 5
   health: 80
   MaxHealth: 100
