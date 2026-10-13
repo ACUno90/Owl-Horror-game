@@ -39,12 +39,15 @@ public class Monster : MonoBehaviour, IDamage
     public float AUDMonsterVol;
     public AudioSource MonsterAUD;
      public static Monster Instance;
+    private GameManger gameManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Instance = this;    
         agent = GetComponent<NavMeshAgent>();
+
+        GameManger.Instance.UpdateGameGoal(1);
     }
 
     // Update is called once per frame
@@ -146,8 +149,10 @@ public class Monster : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             MonsterAUD.PlayOneShot(AUDMonsterDeath[Random.Range(0, AUDMonsterDeath.Length)], AUDMonsterVol);
-            Thread.Sleep(2000);
+         
+            GameManger.Instance.UpdateGameGoal(-1);
             Destroy(gameObject);
+
         }
     }
 
@@ -172,63 +177,6 @@ public class Monster : MonoBehaviour, IDamage
     }
 
     
-
-    //private void DestoryHidingSpot(Collider other)
-    //{
-    //    // Debug information to help locate why the component isn't found
-    //    Debug.Log($"Monster: DestoryHidingSpot invoked for collider '{other.name}' tag='{other.tag}' layer={LayerMask.LayerToName(other.gameObject.layer)} path='{GetTransformPath(other.transform)}'");
-
-    //    // Direct lookup on the collider's GameObject
-    //    HidiingSpots hidingSpot = other.GetComponent<HidiingSpots>();
-    //    if (hidingSpot == null)
-    //    {
-    //        // Try parent and children explicitly
-    //        hidingSpot = other.GetComponentInParent<HidiingSpots>();
-    //    }
-    //    if (hidingSpot == null)
-    //    {
-    //        hidingSpot = other.GetComponentInChildren<HidiingSpots>();
-    //    }
-
-    //    if (hidingSpot != null)
-    //    {
-    //        if (hidingSpot.HidingSpot != null)
-    //        {
-    //            Debug.Log($"Monster: Destroying hiding spot object '{hidingSpot.HidingSpot.name}' found via collider '{other.name}'");
-    //            Destroy(hidingSpot.HidingSpot);
-    //        }
-    //        else
-    //        {
-    //            Debug.Log($"Monster: Destroying hiding spot component's GameObject '{hidingSpot.gameObject.name}' found via collider '{other.name}'");
-    //            Destroy(hidingSpot.gameObject);
-    //        }
-    //        return;
-    //    }
-
-    //    // Fallback: search for HidiingSpots near the collision point (covers nested colliders or mis-assigned components)
-    //    var searchPos = other.ClosestPoint(transform.position);
-    //    Collider[] nearby = Physics.OverlapSphere(searchPos, 1f, WhereHidingSpots);
-    //    foreach (var col in nearby)
-    //    {
-    //        var spot = col.GetComponent<HidiingSpots>() ?? col.GetComponentInParent<HidiingSpots>() ?? col.GetComponentInChildren<HidiingSpots>();
-    //        if (spot != null)
-    //        {
-    //            if (spot.HidingSpot != null)
-    //            {
-    //                Debug.Log($"Monster: Destroying nearby hiding spot '{spot.HidingSpot.name}' found via OverlapSphere from collider '{other.name}'");
-    //                Destroy(spot.HidingSpot);
-    //            }
-    //            else
-    //            {
-    //                Debug.Log($"Monster: Destroying nearby hiding spot component's GameObject '{spot.gameObject.name}' found via OverlapSphere from collider '{other.name}'");
-    //                Destroy(spot.gameObject);
-    //            }
-    //            return;
-    //        }
-    //    }
-
-    //    Debug.LogWarning($"Monster: No HidiingSpots found to destroy for collider '{other.name}'. Ensure the HidiingSpots component exists on the collider or its ancestors/children, and that the collider is on the WhereHidingSpots layer.");
-    //}
 
     private string GetTransformPath(Transform t)
     {

@@ -9,7 +9,6 @@ public class Gun : MonoBehaviour
     public float FireCooldown;
     public bool Automatic;
     private float CurrentCooldown;
-    private bool IsEquipped = false;
     public AudioClip[] AUDGun;
     public float AUDGunVol;
     public AudioSource GunAUD;

@@ -17,6 +17,8 @@ public class GameManger : MonoBehaviour
     [SerializeField] GameObject Menu_Pause;
     [SerializeField] GameObject Menu_Lose;
 
+    [SerializeField] GameObject Menu_Inventory;
+
     [Header("Player stuff")]
     public static GameManger Instance;
     public GameObject player;
@@ -30,10 +32,13 @@ public class GameManger : MonoBehaviour
     [SerializeField] private GameObject FirstSelectMenu;
     [SerializeField] private GameObject FirstLosingMenu;
 
+    [SerializeField] private GameObject FirstWiningMenu;
+
 
     //other stuff
     float timeScale_OG;
     public bool Ispaused;
+    public bool IsInventoryOpen;
 
     public int WinConditionCount;
 
@@ -72,10 +77,23 @@ public class GameManger : MonoBehaviour
             }
         }
 
+        if (Input.GetButtonDown("Inventory"))
+        {
+            if (Menu_Active == null)
+            {
+                StartPause();
+                Menu_Active = Menu_Inventory;
+               Menu_Inventory.SetActive(Ispaused);
+            }
+            else if (Menu_Active == Menu_Inventory)
+            {
+                StartUnPause();
+                //Menu_Active = null;
+            }
+        }
 
 
-
-        UpdateHealthBar();
+            UpdateHealthBar();
     }
 
     public void UpdateHealthBar()
@@ -173,7 +191,7 @@ public class GameManger : MonoBehaviour
         Time.timeScale = 0f;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        Menu_Active = Menu_Lose;    
+        Menu_Active = Menu_Lose;
         Menu_Lose.SetActive(true);
         PlayerScript.enabled = false;
         HealthSlider.enabled = false;
@@ -183,13 +201,57 @@ public class GameManger : MonoBehaviour
     public void UpdateGameGoal(int Goal)
     {
         WinConditionCount += Goal;
-        if (WinConditionCount <= 0) {
-            StartPause();
+        if (WinConditionCount <=0) {
+            Time.timeScale = 0f;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             Menu_Active = Menu_Win;
-            Menu_Win.SetActive(Ispaused);
+            Menu_Win.SetActive(true);
+            PlayerScript.enabled = false;
             HealthSlider.enabled = false;
+            EventSystem.current.SetSelectedGameObject(FirstWiningMenu);
 
         }
+    }
+
+    public void InventoryMenu()
+    {
+
+
+        IsInventoryOpen = !IsInventoryOpen;
+        //  StartPause();
+        Time.timeScale = 0f;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        PlayerScript.enabled = false;
+        if (player != null)
+        {
+            PlayerCamera camera = player.GetComponentInChildren<PlayerCamera>();
+            if (camera != null)
+            {
+                camera.enabled = false;
+            }
+        }
+        HealthSlider.enabled = false;
+    }
+    
+    public void CloseInventoryMenu()
+    {
+        IsInventoryOpen = !IsInventoryOpen;
+        //  StartUnPause();
+        Time.timeScale = timeScale_OG;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        PlayerScript.enabled = true;
+        if (player != null)
+        {
+            PlayerCamera camera = player.GetComponentInChildren<PlayerCamera>();
+            if (camera != null)
+            {
+                camera.enabled = true;
+            }
+        }
+        HealthSlider.enabled = true;
     }
 
 }

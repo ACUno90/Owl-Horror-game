@@ -7,7 +7,9 @@ public class GunDamage : MonoBehaviour
     public int damage;
     public float BulletRange;
     private Transform PlayerCam;
-   
+
+   public Transform Barrel;
+
     void Start()
     {
         PlayerCam =Camera.main.transform;   
@@ -21,11 +23,11 @@ public class GunDamage : MonoBehaviour
 
     public void Shoot()
     {
-        Ray hit = new Ray(PlayerCam.position, PlayerCam.forward);
+        Ray hit = new Ray(Barrel.position, Barrel.forward);
         if (Physics.Raycast(hit, out RaycastHit HitInfo, BulletRange))
         {
             IDamage damageable = HitInfo.transform.GetComponent<IDamage>();
-            if (damageable != null)
+            if (damageable != null && HitInfo.transform.CompareTag("Monster"))
             {
                 damageable.TakeDamage(damage);
             }
