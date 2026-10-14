@@ -36,6 +36,7 @@ public class Monster : MonoBehaviour, IDamage
 
     [Header("audio")]
     public AudioClip[] AUDMonsterDeath;
+    public AudioClip AUDMonsterHurt;
     public float AUDMonsterVol;
     public AudioSource MonsterAUD;
      public static Monster Instance;
@@ -146,6 +147,7 @@ public class Monster : MonoBehaviour, IDamage
     public void TakeDamage(int damage)
     {
         HP -= damage;
+         MonsterAUD.PlayOneShot(AUDMonsterHurt, AUDMonsterVol); 
         if (HP <= 0)
         {
             MonsterAUD.PlayOneShot(AUDMonsterDeath[Random.Range(0, AUDMonsterDeath.Length)], AUDMonsterVol);
