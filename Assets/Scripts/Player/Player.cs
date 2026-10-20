@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-public class Player : MonoBehaviour, IDamage
+public class Player : MonoBehaviour, IDamage, IHealth
 {
     [Header("Player Stats")]
     [SerializeField] public CharacterController controller;
@@ -43,6 +43,7 @@ public class Player : MonoBehaviour, IDamage
 
     [Header("audio")]
     public AudioClip[] AUDPlayerHurt;
+    public AudioClip[] AUDPlayerHeal;
     public float AUDPlayerVol;
 
     public AudioClip[] AUDPlayerWalk;
@@ -176,7 +177,7 @@ public class Player : MonoBehaviour, IDamage
         IsPlayingStop = false;
     }
 
-      public void Heal(int healAmount)
+      public void TakeHealth(int healAmount)
     {
         health += healAmount;
         //PlayerAUD.PlayOneShot(AUDPlayerHeal[Random.Range(0, AUDPlayerHeal.Length)], AUDPlayerVol);
