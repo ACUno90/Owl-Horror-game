@@ -21,8 +21,9 @@ public class HealthPickUp : MonoBehaviour
         if (player != null)
         {
             player.TakeHealth(10); // Heal 10 health points for the player
+            Destroy(HealthPickUpModel.gameObject);
             return;
         }
-      Destroy(HealthPickUpModel.gameObject);
+     
     }
 }

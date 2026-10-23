@@ -81,13 +81,15 @@ public class GameManger : MonoBehaviour
         {
             if (Menu_Active == null)
             {
-                StartPause();
+                //StartPause();
+                InventoryMenu();
                 Menu_Active = Menu_Inventory;
                Menu_Inventory.SetActive(Ispaused);
             }
             else if (Menu_Active == Menu_Inventory)
             {
-                StartUnPause();
+              // CloseInventoryMenu();
+              StartUnPause();
                 //Menu_Active = null;
             }
         }
@@ -216,9 +218,7 @@ public class GameManger : MonoBehaviour
 
     public void InventoryMenu()
     {
-
-
-        IsInventoryOpen = !IsInventoryOpen;
+        Ispaused = !Ispaused;
         //  StartPause();
         Time.timeScale = 0f;
         Cursor.visible = true;
@@ -230,6 +230,7 @@ public class GameManger : MonoBehaviour
             if (camera != null)
             {
                 camera.enabled = false;
+           
             }
         }
         HealthSlider.enabled = false;
@@ -237,7 +238,7 @@ public class GameManger : MonoBehaviour
     
     public void CloseInventoryMenu()
     {
-        IsInventoryOpen = !IsInventoryOpen;
+        Ispaused = !Ispaused;
         //  StartUnPause();
         Time.timeScale = timeScale_OG;
         Cursor.visible = false;

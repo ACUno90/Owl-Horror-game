@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec2b8812834caa4ebb18fb43f9b8934, type: 3}
   m_Name: Test2
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemName: 
-  itemType: {fileID: 21300000, guid: dbd178c0bbd2ed84a9b8e146b09f8468, type: 3}
+  itemName: Dyna
+  Icon: {fileID: 21300000, guid: dbd178c0bbd2ed84a9b8e146b09f8468, type: 3}
   MaxStackSize: 5
-  ItemPrefab: {fileID: 0}
+  ItemPrefab: {fileID: 1008745206981622572, guid: c5ceb321f3648e048b02cbc36f0f61ce, type: 3}
   HandItemPrefab: {fileID: 0}

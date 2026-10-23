@@ -38,10 +38,16 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void UpdateSlotUI()
     {
+        if(IconImage == null )
+        {
+            IconImage = GetComponent<Image>();
+            AmountText = GetComponentInChildren<TextMeshProUGUI>();
+        }
+
         if (HeldItem != null)
         {
             IconImage.enabled = true;   
-            IconImage.sprite = HeldItem.itemType;
+            IconImage.sprite = HeldItem.Icon;
             AmountText.text = itemAmount.ToString();
         }
         else

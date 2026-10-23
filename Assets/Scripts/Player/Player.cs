@@ -189,7 +189,7 @@ public class Player : MonoBehaviour, IDamage, IHealth
         float PlayerModelHeight = ModelHeight; // The height of the character model
         float crouchingHeight = standingHeight / 2; // The height of the character when crouching
         float crouchHeightPlayerModel = PlayerModelHeight / 2; // The difference in height between standing and crouching
-                                                               //  IsCrouching = false;
+           //  IsCrouching = false;
     
             float halfHeightDifference = new Vector3(0, (standingHeight - CrouchHeight) / 2, 0).y;
            // float halfHeightDifferenceModel = new Vector3(0, (PlayerModelHeight - crouchHeightPlayerModel) / 2, 0).y;

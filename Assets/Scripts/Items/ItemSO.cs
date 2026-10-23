@@ -4,7 +4,7 @@ using UnityEngine;
 public class ItemSO : ScriptableObject
 {
     public string itemName;
-    public Sprite itemType;
+    public Sprite Icon;
      public int MaxStackSize;
     public GameObject ItemPrefab;
     public GameObject HandItemPrefab;

@@ -13,6 +13,7 @@ TagManager:
   - Door
   - HidingPlaces
   - HidiingSpots
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Ground
   - HidingSpots
   - HidiingSpots
-  - 
+  - Item
   - 
   - 
   - 
