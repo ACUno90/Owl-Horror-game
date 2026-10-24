@@ -20,6 +20,8 @@ public class Player : MonoBehaviour, IDamage, IHealth
     private Vector3 InitialCameraPosition; //for crounching
     private Vector3 InitialCameraPositionHeight;
 
+
+
     public float Height
     {
         get => controller.height;   

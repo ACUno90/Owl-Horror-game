@@ -27,6 +27,19 @@ public class Inventory : MonoBehaviour
     private Renderer LookedAtRenderer = null;
     [SerializeField] private LayerMask itemLayerMask;
 
+    private int EquippedHotBarIndex = 0;//0-2
+    public float equippedOpacity = 0.9f;
+    public float normalOpacity = 0.58f;
+
+    public Transform Hand;
+    private GameObject CurrentHandItem;
+
+    [Header("audio")]
+    public AudioClip AUDPickUpSound;
+    public AudioClip AUDDropSound;
+    public float AUDInventoryVol;
+    public AudioSource InventoryAUD;
+
     private void Awake()
     {
         HotbarSlots.AddRange(HotbarSlotParent.GetComponentsInChildren<Slot>());
@@ -53,6 +66,11 @@ public class Inventory : MonoBehaviour
         StartDrag();
         UpdateDragItemPosition();
         EndDrag();
+
+        HandleHotBarSelection();
+        HandleDropEquippedItem();
+        UpdateHotBarOpacity();
+
     }
 
     public void AddItem(ItemSO itemToAdd, int amount)
@@ -101,13 +119,15 @@ public class Inventory : MonoBehaviour
     
     private void PickUp()
     {
-        if(LookedAtRenderer != null && Input.GetKeyDown(KeyCode.Q))
+        if(LookedAtRenderer != null && Input.GetKeyDown(KeyCode.E))
         {
            Item itemComponent = LookedAtRenderer.GetComponent<Item>();
             if (itemComponent != null)
             {
+                InventoryAUD.PlayOneShot(AUDPickUpSound, AUDInventoryVol);
                 AddItem(itemComponent.item, itemComponent.amount);
                 Destroy(LookedAtRenderer.gameObject);
+                EquippedHandItem();
                 Debug.Log("Item picked up.");
             }
         }
@@ -237,5 +257,79 @@ public class Inventory : MonoBehaviour
         {
             DragIcon.transform.position = Input.mousePosition;
         }
+    }
+
+    private void UpdateHotBarOpacity()
+    {
+        for(int i = 0; i < HotbarSlots.Count; i++)
+        {
+            Image Icon = HotbarSlots[i].GetComponent<Image>();
+            if(Icon != null)
+            {
+                Icon.color = (i == EquippedHotBarIndex) ? new Color(1, 1, 1, equippedOpacity) : new Color(1, 1, 1, normalOpacity);
+            }
+        }
+    }
+
+
+    private void HandleHotBarSelection()
+    {
+        for(int i =0; i < 6; i++)
+        {
+            if (Input.GetKeyDown((i + 1).ToString()))
+            {
+                EquippedHotBarIndex = i;
+                UpdateHotBarOpacity();
+                EquippedHandItem();
+            }
+        }
+    }
+
+    private void HandleDropEquippedItem()
+    {
+        if (!Input.GetKeyDown(KeyCode.Q))
+            return;
+
+        InventoryAUD.PlayOneShot(AUDDropSound, AUDInventoryVol);
+
+        Slot EquippedItem = HotbarSlots[EquippedHotBarIndex];
+
+        if (!EquippedItem.HasItem())
+            return;
+
+        ItemSO iSO = EquippedItem.GetItem();
+        GameObject ItemPrefab = iSO.ItemPrefab;
+
+        if (ItemPrefab == null)
+            return;
+
+        GameObject dropped = Instantiate(ItemPrefab, Camera.main.transform.position + Camera.main.transform.forward, Quaternion.identity);
+
+        Item item = dropped.GetComponent<Item>();
+        item.item = iSO;
+        item.amount = EquippedItem.GetAmount();
+
+        EquippedItem.ClearSLot();
+        EquippedHandItem();
+    }
+
+    private void EquippedHandItem()
+    {
+        //clear up previous hand Item
+        if (CurrentHandItem != null)
+            Destroy(CurrentHandItem);
+
+        Slot equippedSlot = HotbarSlots[EquippedHotBarIndex];
+        if (!equippedSlot.HasItem())
+            return;
+
+        ItemSO iE = equippedSlot.GetItem();
+        if (iE.HandItemPrefab == null)
+            return;
+
+        CurrentHandItem = Instantiate(iE.HandItemPrefab, Hand);
+        CurrentHandItem.transform.localPosition = Vector3.zero;
+        CurrentHandItem.transform.localRotation = Quaternion.identity;
+
     }
 }
