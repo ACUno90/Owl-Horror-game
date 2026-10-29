@@ -33,7 +33,7 @@ public class GameManger : MonoBehaviour
     [SerializeField] private GameObject FirstLosingMenu;
 
     [SerializeField] private GameObject FirstWiningMenu;
-    
+     
     
     //other stuff
     float timeScale_OG;

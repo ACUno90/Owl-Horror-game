@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 public class Player : MonoBehaviour, IDamage, IHealth
 {
+
+    public static Player Instance;
     [Header("Player Stats")]
     [SerializeField] public CharacterController controller;
     [SerializeField] Transform PlayerModel;
@@ -73,7 +75,7 @@ public class Player : MonoBehaviour, IDamage, IHealth
     void Start()
     {
         IsPlayingStop = false;
-  
+        Instance = this;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         InitialCameraPosition = Camera.main.transform.localPosition;
        // InitialCameraPositionHeight = Camera.main.transform.localPosition.y;

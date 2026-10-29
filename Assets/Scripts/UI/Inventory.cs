@@ -6,8 +6,11 @@ using System.Runtime.CompilerServices;
 using UnityEngine.UI;
 //using UnityEngine.UIElements;
 using UnityEditor;
+using TMPro;
 public class Inventory : MonoBehaviour
 {
+    public static Inventory Instance;
+
     public ItemSO RandomItemTest;
     public ItemSO RandomItemTest2;
 
@@ -34,6 +37,13 @@ public class Inventory : MonoBehaviour
     public Transform Hand;
     private GameObject CurrentHandItem;
 
+    public GameObject ItemDescriptionParent;
+    public Image ItemDescriptionImage;
+
+    public TextMeshProUGUI DescriptionItemNameText;
+    public TextMeshProUGUI DescriptionItemText;
+
+
     [Header("audio")]
     public AudioClip AUDPickUpSound;
     public AudioClip AUDDropSound;
@@ -42,6 +52,7 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         HotbarSlots.AddRange(HotbarSlotParent.GetComponentsInChildren<Slot>());
         InventorySlots.AddRange(InventorySlotParent.GetComponentsInChildren<Slot>());
         AllSlots.AddRange(InventorySlots);
@@ -70,7 +81,7 @@ public class Inventory : MonoBehaviour
         HandleHotBarSelection();
         HandleDropEquippedItem();
         UpdateHotBarOpacity();
-
+        UpdateItemDescription();
     }
 
     public void AddItem(ItemSO itemToAdd, int amount)
@@ -331,5 +342,46 @@ public class Inventory : MonoBehaviour
         CurrentHandItem.transform.localPosition = Vector3.zero;
         CurrentHandItem.transform.localRotation = Quaternion.identity;
 
+    }
+
+    private void UpdateItemDescription()
+    {
+        Slot hoveredSlot = GetHoverSlot();
+
+        if(hoveredSlot != null)
+        {
+            ItemSO HoverdItem = hoveredSlot.GetItem();
+
+            if(HoverdItem != null)
+            {
+                ItemDescriptionParent.SetActive(true);
+                ItemDescriptionImage.sprite = HoverdItem.Icon;
+                DescriptionItemText.text = HoverdItem.ItemDescription;
+                DescriptionItemNameText.text = HoverdItem.itemName;
+            }
+        }
+        else
+        {
+            ItemDescriptionParent.SetActive(false);
+        }
+
+       
+    }
+
+    public void ConsumeItem(int amount =1)
+    {
+        Slot es = HotbarSlots[EquippedHotBarIndex];
+        if (!es.HasItem())
+            return;
+        int NewAmount = es.GetAmount() - amount;
+
+        if(NewAmount <= 0)
+        {
+            es.ClearSLot();
+        }
+        else
+        {
+            es.SetItem(es.GetItem(), NewAmount);
+        }
     }
 }

@@ -8,4 +8,6 @@ public class ItemSO : ScriptableObject
      public int MaxStackSize;
     public GameObject ItemPrefab;
     public GameObject HandItemPrefab;
+
+    public string ItemDescription;
 }
