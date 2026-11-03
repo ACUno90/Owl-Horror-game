@@ -340,7 +340,7 @@ public class Inventory : MonoBehaviour
 
         CurrentHandItem = Instantiate(iE.HandItemPrefab, Hand);
         CurrentHandItem.transform.localPosition = Vector3.zero;
-        CurrentHandItem.transform.localRotation = Quaternion.identity;
+        CurrentHandItem.transform.localRotation = iE.HandItemPrefab.transform.rotation; 
 
     }
 
