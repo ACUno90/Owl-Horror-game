@@ -184,6 +184,13 @@ public class GameManger : MonoBehaviour
             }
         }
         HealthSlider.enabled = true;
+
+        ChestInventory[] StorageChest = FindObjectsByType<ChestInventory>(FindObjectsSortMode.None);
+        for (int i = 0; i < StorageChest.Length; i++)
+        {
+            StorageChest[i].CloseChest();
+        }
+
         EventSystem.current.SetSelectedGameObject(null);    
     }
 
@@ -234,6 +241,9 @@ public class GameManger : MonoBehaviour
             }
         }
         HealthSlider.enabled = false;
+
+      
+
     }
     
     public void CloseInventoryMenu()
@@ -253,6 +263,11 @@ public class GameManger : MonoBehaviour
             }
         }
         HealthSlider.enabled = true;
+        //ChestInventory[] StorageChest = FindObjectsByType<ChestInventory>(FindObjectsSortMode.None);
+        //for (int i = 0; i < StorageChest.Length; i++)
+        //{
+        //    StorageChest[i].CloseChest();
+        //}
     }
 
 }

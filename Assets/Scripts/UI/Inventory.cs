@@ -10,17 +10,15 @@ using TMPro;
 public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
-
-    public ItemSO RandomItemTest;
-    public ItemSO RandomItemTest2;
-
     public Image DragIcon;
 
     public GameObject InventorySlotParent;
     public GameObject HotbarSlotParent;
+   public Transform ChestSlotParent;
     public List<Slot> InventorySlots = new List<Slot>();
     public List<Slot> HotbarSlots = new List<Slot>();   
     public List<Slot> AllSlots = new List<Slot>();
+    public List<Slot> ChestSlots = new List<Slot>();
 
     public Slot DragedSlot = null;
     private bool isDragging = false;
@@ -57,20 +55,15 @@ public class Inventory : MonoBehaviour
         InventorySlots.AddRange(InventorySlotParent.GetComponentsInChildren<Slot>());
         AllSlots.AddRange(InventorySlots);
         AllSlots.AddRange(HotbarSlots);
+        ChestSlots.AddRange(ChestSlotParent.GetComponentsInChildren<Slot>());
 
 
+        ChestSlotParent.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    AddItem(RandomItemTest, 1);
-        //}
-        //else if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    AddItem(RandomItemTest2, 1);
-        //}
+    
         DetectLookedAtItem();
         PickUp();
 
@@ -257,6 +250,14 @@ public class Inventory : MonoBehaviour
             if (slot.Hovering)
             {
                 return slot;
+            }
+        }
+
+        foreach (Slot CSlot in ChestSlots)
+        {
+            if (CSlot.Hovering)
+            {
+                return CSlot;
             }
         }
         return null;    
