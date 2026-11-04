@@ -12,33 +12,6 @@ public class Key : MonoBehaviour
         doorCollider.SetActive(true);
     }
 
-    // Update is called once per frame
-    //public void OnTriggerEnter(Collider other)
-    //{
-        
-
-    //    //Player player = other.GetComponent<Player>() ?? other.GetComponentInParent<Player>();
-    //    //if (player != null)
-    //    //{
-    //    //    doorCollider.SetActive(true);
-    //    //    Destroy(gameObject);
-    //    //}
-
-    //    if(other.gameObject.tag == "Player")
-    //    {
-    //        doorCollider.SetActive(false);
-    //        Destroy(gameObject);
-    //    }
-        
-          
-
-
-    //  //Debug.LogWarning("KeyPlayer component not found on the collided object.");
-    //}
-
-
-
-
     public void OpenDoor()
     {
 

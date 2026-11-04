@@ -21,6 +21,7 @@ public class Player : MonoBehaviour, IDamage, IHealth
     [SerializeField] float CrouchSpeed = 2f;
     private Vector3 InitialCameraPosition; //for crounching
     private Vector3 InitialCameraPositionHeight;
+    private Transform playerCameraTransform;
 
 
 
@@ -77,7 +78,8 @@ public class Player : MonoBehaviour, IDamage, IHealth
         IsPlayingStop = false;
         Instance = this;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-        InitialCameraPosition = Camera.main.transform.localPosition;
+        playerCameraTransform = GetComponentInChildren<PlayerCamera>().transform;
+        InitialCameraPosition = playerCameraTransform.localPosition;
        // InitialCameraPositionHeight = Camera.main.transform.localPosition.y;
         originalHeight = controller.height;
         originalModelHeight = PlayerModel.localScale.y;
@@ -194,6 +196,7 @@ public class Player : MonoBehaviour, IDamage, IHealth
         float crouchingHeight = standingHeight / 2; // The height of the character when crouching
         float crouchHeightPlayerModel = PlayerModelHeight / 2; // The difference in height between standing and crouching
            //  IsCrouching = false;
+
     
             float halfHeightDifference = new Vector3(0, (standingHeight - CrouchHeight) / 2, 0).y;
            // float halfHeightDifferenceModel = new Vector3(0, (PlayerModelHeight - crouchHeightPlayerModel) / 2, 0).y;
@@ -203,18 +206,17 @@ public class Player : MonoBehaviour, IDamage, IHealth
       //  controller.center = crouchCenter;   
         PlayerModel.localPosition = new Vector3(PlayerModel.localPosition.x, crouchCenter.y, PlayerModel.localPosition.z);  
       
-        PlayerCamera.Instance.transform.localPosition = newCameraPosition;
+            playerCameraTransform.localPosition = newCameraPosition;
             speed = CrouchSpeed;
              IsCrouching = true;
     }
 
     public void UnCrounch()
     {
-   
-            Height = originalHeight;
+        playerCameraTransform.localPosition = InitialCameraPosition;
+        Height = originalHeight;
             ModelHeight = originalModelHeight;
-       // controller.center = originalCenter;
-        PlayerCamera.Instance.transform.localPosition = InitialCameraPosition;
+       // controller.center = originalCenter
             speed = originalSpeed;
             IsCrouching = false;
    
