@@ -385,4 +385,9 @@ public class Inventory : MonoBehaviour
             es.SetItem(es.GetItem(), NewAmount);
         }
     }
+
+    public bool IsHoldingKey()
+    {
+        return CurrentHandItem != null && CurrentHandItem.GetComponentInChildren<Key>() != null;
+    }
 }

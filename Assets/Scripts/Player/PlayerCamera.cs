@@ -33,7 +33,7 @@ public class PlayerCamera : MonoBehaviour
           
         }
         else
-            roll += mouseX;
+          roll += mouseX;
         //clamp the roll value to prevent the camera from rotating too far up or down
         roll = Mathf.Clamp(roll, lockverMin, lockVerMax);
         // apply the roll value to the camera's local rotation

@@ -4,24 +4,32 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
-    public GameObject doorCollider;
+  //  public GameObject doorCollider;
 
 
     void Start()
     {
-        doorCollider.SetActive(true);
+       // doorCollider.SetActive(true);
     }
+
+    private void Update()
+    {
+
+
+    }
+
 
     public void OpenDoor()
     {
 
-      ///  if (Input.GetKeyDown(KeyCode.E))
-        //{
-            doorCollider.SetActive(true);
-            Destroy(gameObject);
-           // Debug.LogWarning("Key: dor is gone!!.");
 
-       // }
+        if (Input.GetMouseButtonDown(1))
+        {
+
+            Inventory.Instance.ConsumeItem(1);
+            Destroy(gameObject);
+          
+        }
         Debug.LogWarning("Key: OpenDoor called.");
 
     }
