@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4906436098344575430}
   - component: {fileID: 3537565027230618556}
   - component: {fileID: 4380445641528498964}
-  - component: {fileID: 4254401710301331454}
   m_Layer: 0
   m_Name: Key_hand Item
   m_TagString: Key
@@ -91,16 +90,3 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4254401710301331454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3515755224995263315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61103efd72b483c4ab900c852804587f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Key
-  doorCollider: {fileID: 0}
