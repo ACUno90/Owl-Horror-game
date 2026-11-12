@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec2b8812834caa4ebb18fb43f9b8934, type: 3}
   m_Name: HealItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemID: healthitem
   itemName: HealItem
   Icon: {fileID: 21300000, guid: e6686d2c8e1596d41b5f1672f48cfd45, type: 3}
   MaxStackSize: 10

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec2b8812834caa4ebb18fb43f9b8934, type: 3}
   m_Name: test
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemID: hi
   itemName: Hi
   Icon: {fileID: 21300000, guid: f4a81b57dd949484b9bdce1d453de39b, type: 3}
   MaxStackSize: 10

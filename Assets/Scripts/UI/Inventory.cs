@@ -390,4 +390,9 @@ public class Inventory : MonoBehaviour
     {
         return CurrentHandItem != null && CurrentHandItem.GetComponentInChildren<Key>() != null;
     }
+
+    public List<Slot> GetAllSlots()
+    {
+        return AllSlots;
+    }
 }

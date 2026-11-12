@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec2b8812834caa4ebb18fb43f9b8934, type: 3}
   m_Name: Key
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemID: door key
   itemName: Door Key
   Icon: {fileID: 21300000, guid: b419bbb34124ad14dae062f91890c423, type: 3}
   MaxStackSize: 1
